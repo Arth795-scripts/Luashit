@@ -1,11 +1,11 @@
 local v1 = "Wooden Broadsword"
-local v2 = -9999999999
+local v2 = -999999999999999
 local v3 = "Swords"
 local event = game:GetService("ReplicatedStorage").Remotes.Buy
 
 event:FireServer(v1, v2, v3)
 
-local v1 = 9999999999    
+local v1 = 999999999999999   
 local v2 = true
 local v3 = "Gems"
 local event = game:GetService("ReplicatedStorage").Remotes.VaribleInscrease
