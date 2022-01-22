@@ -1,0 +1,521 @@
+function RemoveTrail(TARGET2)
+    local AwaitHead = TARGET2.Character:WaitForChild("Head", 5)
+    local Trail = AwaitHead:FindFirstChild("Trail", 2)
+    local OtherTrail = AwaitHead:FindFirstChild("TrailStuff1", 2)
+
+    if Trail then
+        Trail:Destroy()
+    end
+    if OtherTrail then
+        OtherTrail:Destroy()
+    end
+end
+
+function HidePlayer(TargetedPlayer, Option)
+    for i, v in pairs(TargetedPlayer.Character:GetChildren()) do
+        if Option == 1 then
+            if v:IsA("MeshPart") then
+                v.Transparency = 1
+            end
+        elseif Option == 2 then
+            if v:IsA("MeshPart") then
+                v.Transparency = 0
+            end
+        end
+    end
+end
+
+for _, v in pairs(game.Workspace.Tycoons:GetDescendants()) do
+    if v.Name == "Owner" then
+        if v.Value == game.Players.LocalPlayer.Name then
+            local UserTycoon = v.Parent
+            _G.LOCALUSERTYCOON = UserTycoon
+        end
+    end
+end
+
+local StopFrame = Instance.new("Frame")
+local StopTextLabel = Instance.new("TextLabel")
+local StopTextButton = Instance.new("TextButton")
+
+--Properties:
+
+local CurrentCamera = workspace.CurrentCamera
+local ScreenGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local TextLabel = Instance.new("TextLabel")
+local PlrListFrame = Instance.new("Frame")
+local PlrListScrollingFrame = Instance.new("ScrollingFrame")
+local OptionFrame = Instance.new("Frame")
+local KillPlr = Instance.new("TextButton")
+local Plr = game.Players.LocalPlayer
+local UserInputService = game:GetService("UserInputService")
+local colors = {Color3.fromRGB(97, 0, 234), Color3.fromRGB(194, 128, 234)}
+local tweenInfo = TweenInfo.new(2)
+local tweenService = game:GetService("TweenService")
+
+--Properties:
+
+StopFrame.Parent = ScreenGui
+StopFrame.BackgroundColor3 = Color3.fromRGB(49, 55, 67)
+StopFrame.BorderColor3 = Color3.fromRGB(27, 42, 53)
+StopFrame.BorderSizePixel = 0
+StopFrame.Position = UDim2.new(0.678111553, 0, 0.747993588, 0)
+StopFrame.Size = UDim2.new(0, 255, 0, 120)
+
+StopTextLabel.Parent = StopFrame
+StopTextLabel.BackgroundColor3 = Color3.fromRGB(97, 0, 234)
+StopTextLabel.BorderSizePixel = 0
+StopTextLabel.Size = UDim2.new(0, 255, 0, 40)
+StopTextLabel.Font = Enum.Font.GothamSemibold
+StopTextLabel.Text = "   STKLY: Stop ALL Loop Killing"
+StopTextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+StopTextLabel.TextSize = 15.000
+StopTextLabel.TextWrapped = true
+StopTextLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+StopTextButton.Parent = StopFrame
+StopTextButton.BackgroundColor3 = Color3.fromRGB(97, 0, 234)
+StopTextButton.BorderSizePixel = 0
+StopTextButton.Position = UDim2.new(0.105882354, 0, 0.458333343, 0)
+StopTextButton.Size = UDim2.new(0, 200, 0, 50)
+StopTextButton.Font = Enum.Font.GothamSemibold
+StopTextButton.Text = "Proceed"
+StopTextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+StopTextButton.TextSize = 20.000
+
+ScreenGui.Parent = game.CoreGui
+MainFrame.Parent = ScreenGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(49, 55, 67)
+MainFrame.BorderSizePixel = 0
+MainFrame.Position = UDim2.new(0.016070962, 0, 0.048859939, 0)
+MainFrame.Size = UDim2.new(0, 350, 0, 340)
+
+TextLabel.Parent = MainFrame
+TextLabel.BackgroundColor3 = Color3.fromRGB(97, 0, 234)
+TextLabel.BorderColor3 = Color3.fromRGB(27, 27, 27)
+TextLabel.BorderSizePixel = 0
+TextLabel.Size = UDim2.new(0, 350, 0, 32)
+TextLabel.Font = Enum.Font.GothamSemibold
+TextLabel.Text = "  Stokeley | By Sussy Baka"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextSize = 20
+TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+PlrListFrame.Parent = MainFrame
+PlrListFrame.BackgroundColor3 = Color3.fromRGB(55, 61, 73)
+PlrListFrame.BorderSizePixel = 0
+PlrListFrame.Position = UDim2.new(0.0299999993, 0, 0.120000012, 0)
+PlrListFrame.Size = UDim2.new(0, 172, 0.088, 0)
+
+PlrListScrollingFrame.Parent = PlrListFrame
+PlrListScrollingFrame.Active = true
+PlrListScrollingFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+PlrListScrollingFrame.Position = UDim2.new(0.042, 0, 0, 7)
+PlrListScrollingFrame.Size = UDim2.new(0, 157, 0, 152)
+PlrListScrollingFrame.ScrollBarThickness = 0
+PlrListScrollingFrame.BackgroundTransparency = 1
+PlrListScrollingFrame.ScrollingEnabled = false
+OptionFrame.Parent = MainFrame
+OptionFrame.BackgroundColor3 = Color3.fromRGB(55, 61, 73)
+OptionFrame.BorderSizePixel = 0
+OptionFrame.Position = UDim2.new(0.544285655, 0, 0.120000012, 0)
+OptionFrame.Size = UDim2.new(0, 150, 0, 272)
+local InfoPromt = TextLabel:Clone()
+InfoPromt.Parent = MainFrame
+InfoPromt.BackgroundColor3 = Color3.fromRGB(55, 61, 73)
+InfoPromt.Size = UDim2.new(0, 172, 0.067, 105)
+InfoPromt.TextScaled = true
+InfoPromt.TextXAlignment = Enum.TextXAlignment.Center
+InfoPromt.Position = UDim2.new(0.03, 0, 0.12, 0)
+InfoPromt.Text = "Keybinds = B to open/close UI. V to unspectate."
+KillPlr.Name = "KillPlr"
+KillPlr.Parent = OptionFrame
+KillPlr.BackgroundColor3 = Color3.fromRGB(97, 0, 234)
+KillPlr.BorderSizePixel = 0
+KillPlr.Position = UDim2.new(0.0403973907, 0, 0, 7)
+KillPlr.Size = UDim2.new(0, 138, 0, 30)
+KillPlr.Font = Enum.Font.GothamSemibold
+KillPlr.Text = "KILL"
+KillPlr.TextColor3 = Color3.fromRGB(255, 255, 255)
+KillPlr.TextSize = 20.000
+
+local TpPlr = KillPlr:Clone()
+TpPlr.Name = "TpPlr"
+TpPlr.Parent = OptionFrame
+TpPlr.Position = UDim2.new(0.0403973907, 0, 0, 45)
+TpPlr.Text = "TELEPORT"
+
+local SpectatePlr = TpPlr:Clone()
+SpectatePlr.Name = "SpectatePlr"
+SpectatePlr.Parent = OptionFrame
+SpectatePlr.Position = UDim2.new(0.0403973907, 0, 0, 83)
+SpectatePlr.Text = "SPECTATE"
+
+local RaidPlr = SpectatePlr:Clone()
+RaidPlr.Name = "RaidPlr"
+RaidPlr.Parent = OptionFrame
+RaidPlr.Position = UDim2.new(0.0403973907, 0, 0, 121)
+RaidPlr.Text = "RAID BASE"
+
+local FixPlr = RaidPlr:Clone()
+FixPlr.Name = "FixPlr"
+FixPlr.Parent = OptionFrame
+FixPlr.Position = UDim2.new(0.0403973907, 0, 0, 159)
+FixPlr.Text = "Auto Crate"
+
+local FreezePlr = FixPlr:Clone()
+FreezePlr.Name = "FreezePlr"
+FreezePlr.Parent = OptionFrame
+FreezePlr.Position = UDim2.new(0.0403973907, 0, 5.60984894e-08, 197)
+FreezePlr.Text = "Vault Farm"
+
+local LoopPlr = FreezePlr:Clone()
+LoopPlr.Name = "LoopPlr"
+LoopPlr.Parent = OptionFrame
+LoopPlr.Position = UDim2.new(0.0403973907, 0, 5.60984894e-08, 235)
+LoopPlr.Text = "LOOP KILL"
+
+spawn(
+    function()
+        while true do
+            for index, value in pairs(colors) do
+                local tween1 = tweenService:Create(LoopPlr, tweenInfo, {BackgroundColor3 = value})
+
+                tween1:Play()
+                tween1.Completed:Wait()
+
+                wait()
+            end
+            wait()
+        end
+    end
+)
+
+ScreenGui.Parent = nil
+
+function enableGUI()
+    _G.TARGET = nil
+    _G.CanKill = nil
+    _G.Has1Protection = nil
+    local CorrectP = 0
+    local players = game.Players:GetChildren()
+
+    table.sort(
+        players,
+        function(p1, p2)
+            return p1:GetFullName() < p2:GetFullName()
+        end
+    )
+
+    local v7, v8, v9 = pairs(players)
+    while true do
+        local v10, Target = v7(v8, v9)
+        if not v10 then
+            break
+        end
+        v9 = v10
+        if Target ~= Plr then
+            local PlrClick = Instance.new("TextButton")
+            PlrClick.Size = UDim2.new(0, 157, 0, 16)
+            PlrClick.Position = UDim2.new(0, 0, 0, CorrectP * 21)
+            PlrClick.BackgroundColor3 = Color3.fromRGB(97, 0, 234)
+            PlrClick.Text = (Target.Name)
+            PlrClick.TextColor3 = Color3.fromRGB(255, 255, 255)
+            PlrClick.Parent = PlrListScrollingFrame
+            PlrClick.BorderSizePixel = 0
+            PlrClick.Font = Enum.Font.GothamSemibold
+            PlrClick.TextScaled = true
+            PlrListFrame.Size = UDim2.new(0, 172, 0.088, CorrectP * 21)
+            InfoPromt.Position = UDim2.new(0.03, 0, 0.229, CorrectP * 21)
+            CorrectP = CorrectP + 1
+            PlrClick.Name = "User"
+            PlrClick.MouseButton1Click:Connect(
+                function()
+                    for _, v in pairs(PlrListScrollingFrame:GetChildren()) do
+                        v.BackgroundColor3 = Color3.fromRGB(97, 0, 234)
+                    end
+                    wait()
+                    PlrClick.BackgroundColor3 = Color3.fromRGB(194, 128, 234)
+
+                    _G.TARGET = Target
+                    _G.CanKill = "TRUE"
+                    local HasField =
+                        _G.TARGET.Character:FindFirstChild("BuildingFF") or
+                        _G.TARGET.Character:FindFirstChild("SpawnFF")
+                    if HasField then
+                        _G.CanKill = "FALSE"
+                    end
+                    _G.Has1Protection = "TRUE"
+                    local HasProtection = _G.TARGET:FindFirstChild("BuildMode")
+                    if HasProtection then
+                        _G.Has1Protection = "FALSE"
+                        _G.CanKill = "FALSE"
+                    end
+                    InfoPromt.Text =
+                        _G.TARGET.Name .. " STATUS: \nKill-able=" .. _G.CanKill .. "\nRaid-able=" .. _G.Has1Protection
+
+                    for _, x in pairs(game.Workspace.Tycoons:GetChildren()) do
+                        for i, v in pairs(x:GetChildren()) do
+                            if v.Name == "Owner" and v.Value == _G.TARGET.Name then
+                                _G.SelectedTycoon = v.Parent
+                            end
+                        end
+                    end
+                end
+            )
+        end
+    end
+    PlrListScrollingFrame.CanvasSize = UDim2.new(.35, 0, 0, CorrectP * 50)
+    ScreenGui.Parent = game.CoreGui
+end
+
+enableGUI()
+FixPlr.MouseButton1Click:Connect(
+    function()
+        spawn(
+            function()
+                while true do
+                    wait(1)
+
+                    local Crate =
+                        game.Workspace:FindFirstChild("Godly Crate") or game.Workspace:FindFirstChild("Legendary Crate") or
+                        game.Workspace:FindFirstChild("Rainbow Crate") or
+                        game.Workspace:FindFirstChild("Dark Matter Crate") or
+                        game.Workspace:FindFirstChild("Blazing Crate") or
+                        game.Workspace:FindFirstChild("Base Crate")
+                    if Crate then
+                        InfoPromt.Text = "CRATE HAS SPAWNED!!\nATTEMPTING TO COLLECT!"
+                        Plr.Character.HumanoidRootPart.CFrame = Crate.Union.CFrame
+                    else
+                        print("No Crate")
+                    end
+                end
+            end
+        )
+    end
+)
+
+KillPlr.MouseButton1Click:Connect(
+    function()
+        InfoPromt.Text = "Now attempting to Kill " .. _G.TARGET.Name
+        HidePlayer(_G.TARGET, 1)
+        spawn(
+            function()
+                local Head = _G.TARGET.Character:FindFirstChild("Head")
+
+                local face = Head:FindFirstChild("face") or Head:FindFirstChild("Face")
+                if face then
+                    face:Destroy()
+                end
+
+                local HasBall = _G.LOCALUSERTYCOON.PlacedContent:FindFirstChild("Ballista")
+                local pathv =
+                    _G.LOCALUSERTYCOON.PlacedContent.Ballista.Model.ColorPart:FindFirstChild("Meshes/BALLISTA4")
+                if HasBall then
+                    Head.Position = pathv.Position
+                    Head.Size = Vector3.new(45, 45, 45)
+
+                    wait(.1)
+                    Head.Position = pathv.Position
+                end
+            end
+        )
+    end
+)
+
+SpectatePlr.MouseButton1Click:Connect(
+    function()
+        InfoPromt.Text = "Now spectating " .. _G.TARGET.Name
+        CurrentCamera.CameraSubject = _G.TARGET.Character.Humanoid
+    end
+)
+
+TpPlr.MouseButton1Click:Connect(
+    function()
+        InfoPromt.Text = "Now attempting to Teleport to " .. _G.TARGET.Name
+        local TeleportCompleted = false
+        Plr.Character.Humanoid.Health = 0
+        Plr.CharacterAdded:Connect(
+            function(newChar)
+                wait(.2)
+                if TeleportCompleted == false then
+                    local RootPart = newChar:WaitForChild("HumanoidRootPart")
+                    RootPart.CFrame = _G.TARGET.Character.HumanoidRootPart.CFrame
+                    TeleportCompleted = true
+                else
+                    return
+                end
+            end
+        )
+    end
+)
+
+LoopPlr.MouseButton1Click:Connect(
+    function()
+        InfoPromt.Text = "Now attempting to Loop Kill " .. _G.TARGET.Name
+
+        spawn(
+            function()
+                local SHIT = _G.TARGET
+                while true do
+                    HidePlayer(_G.TARGET, 1)
+                    wait(.3)
+                    local Head = SHIT.Character:FindFirstChild("Head")
+
+                    local HasBall = _G.LOCALUSERTYCOON.PlacedContent:FindFirstChild("Ballista")
+                    local pathv =
+                        _G.LOCALUSERTYCOON.PlacedContent.Ballista.Model.ColorPart:FindFirstChild("Meshes/BALLISTA4")
+                    if HasBall then
+                        while true do
+                            wait(1)
+                            local HasField =
+                                SHIT.Character:FindFirstChild("BuildingFF") or SHIT.Character:FindFirstChild("SpawnFF")
+                            if HasField then
+                                local Head = SHIT.Character:FindFirstChild("Head")
+
+                                Head.Size = Vector3.new(1, 1, 1)
+                                Head.Transparency = 0
+                            else
+                                spawn(
+                                    function()
+                                        RemoveTrail(SHIT)
+                                        local Head = SHIT.Character:FindFirstChild("Head")
+                                        local face = Head:FindFirstChild("Face") or Head:FindFirstChild("face")
+                                        if face then
+                                            face:Destroy()
+                                        end
+                                        Head.Position = pathv.Position
+                                        Head.Size = Vector3.new(45, 45, 45)
+                                        Head.Transparency = 1
+                                        HidePlayer(SHIT, 1)
+                                        wait(.5)
+                                    end
+                                )
+                            end
+                        end
+                    end
+                end
+            end
+        )
+    end
+)
+--Frame.FindServer.MouseButton1Click
+RaidPlr.MouseButton1Click:Connect(
+    function()
+        InfoPromt.Text = "Now attempting to Raid " .. _G.TARGET.Name
+        local TeleportCompleted = false
+        Plr.Character.Humanoid.Health = 0
+
+        Plr.CharacterAdded:Connect(
+            function(newChar)
+                wait(.2)
+                if TeleportCompleted == false then
+                    local RootPart = newChar:WaitForChild("HumanoidRootPart")
+                    wait()
+                    RootPart.CFrame = _G.SelectedTycoon["Raiding Statue"].Model.COLLIDER.CFrame
+                    TeleportCompleted = true
+                else
+                    return
+                end
+            end
+        )
+    end
+)
+
+FreezePlr.MouseButton1Click:Connect(
+    function()
+        spawn(
+            function()
+                while true do
+                    wait(40)
+                    for i, v in pairs(workspace:GetDescendants()) do
+                        wait()
+                        if v:IsA("ClickDetector") then
+                            fireclickdetector(v)
+                        end
+                    end
+                end
+            end
+        )
+    end
+)
+
+UserInputService.InputBegan:connect(
+    function(HotKey, Chatting)
+        if not Chatting and HotKey.UserInputType == Enum.UserInputType.Keyboard and HotKey.KeyCode == Enum.KeyCode.B then
+            if ScreenGui.Parent == nil then
+                enableGUI()
+            else
+                ScreenGui.Parent = nil
+                for NumericalInteger, ScreenGUIchild in pairs(PlrListScrollingFrame:GetChildren()) do
+                    ScreenGUIchild:Destroy()
+                end
+            end
+        elseif not Chatting and HotKey.UserInputType == Enum.UserInputType.Keyboard and HotKey.KeyCode == Enum.KeyCode.V then
+            CurrentCamera.CameraSubject = Plr.Character.Humanoid
+            InfoPromt.Text = "Unspectated " .. _G.TARGET.Name
+        end
+    end
+)
+spawn(
+    function()
+        local v18 = {}
+
+        while wait() do
+            if ScreenGui.Parent == Plr.PlayerGui then
+                for v19 = #v18, 1, -1 do
+                    v18[v19]:Destroy()
+                    table.remove(v18, v19)
+                end
+            end
+        end
+    end
+)
+
+local gui = ScreenGui.Frame
+
+local dragging
+local dragInput
+local dragStart
+local startPos
+
+local function update(input)
+    local delta = input.Position - dragStart
+    gui.Position =
+        UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+
+gui.InputBegan:Connect(
+    function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = gui.Position
+
+            input.Changed:Connect(
+                function()
+                    if input.UserInputState == Enum.UserInputState.End then
+                        dragging = false
+                    end
+                end
+            )
+        end
+    end
+)
+
+gui.InputChanged:Connect(
+    function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+    end
+)
+
+UserInputService.InputChanged:Connect(
+    function(input)
+        if input == dragInput and dragging then
+            update(input)
+        end
+    end
+)
