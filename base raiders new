@@ -1,3 +1,4 @@
+function script()
 local group = 4093362
 local function shit(t)
     return t > 12 and t - 12 or t
@@ -131,3 +132,10 @@ task.spawn(
         end
     end
 )
+end
+
+if syn then
+    script()
+    else
+        game.Players.LocalPlayer:Kick("Synapse X Is Only Supported!")
+    end
