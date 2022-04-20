@@ -1,0 +1,46 @@
+task.spawn(
+    function()
+        while autoEXP do
+            wait()
+            local trick = {
+                [1] = {["TrickName"] = "Ollie", ["HasbeenReported"] = true, ["Value"] = 0, ["IsRampTrick"] = true}
+            }
+            game:GetService("ReplicatedStorage").Tricks_TrickLanded:FireServer(true, 360, 540, trick)
+        end
+    end
+)
+
+task.spawn(
+    function()
+        while autoCoin do
+            for i, v in pairs(game:GetService("Workspace").CoinLocations:GetChildren()) do
+                if v.Name == "Coin" then
+                    wait(.1)
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                end
+            end
+        end
+    end
+)
+
+task.spawn(
+    function()
+        rconsolename("Vans World Script Console")
+
+        rconsoleclear()
+        rconsoleprint("@@RED@@")
+        rconsoleprint("Thanks for using my script, " .. game.Players.LocalPlayer.Name .. "!\n")
+        rconsoleprint("All credits to Unnamed#0152\n")
+        rconsoleprint("Make sure to join the discord for more releases!\ndiscord.gg/YJJuKp9Eag\n")
+    end
+)
+
+task.spawn(
+    function()
+        if antiAFK then
+            for i, v in pairs(getconnections(game.Players.LocalPlayer.Idled)) do
+                v:Disable()
+            end
+        end
+    end
+)
