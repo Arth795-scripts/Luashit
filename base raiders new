@@ -79,14 +79,6 @@ function script()
 
     task.spawn(
         function()
-            if game.Players.LocalPlayer.UserId == "21432915" then
-                game.Players.LocalPlayer:Kick("Cmon dave")
-            end
-        end
-    )
-
-    task.spawn(
-        function()
             game:GetService("Players").PlayerAdded:Connect(
                 function(plr)
                     if plr:IsInGroup(group) and plr:GetRankInGroup(group) >= 101 then
