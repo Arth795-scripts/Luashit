@@ -44,7 +44,7 @@ function script()
                 game:GetService("ReplicatedStorage").Events.SessionRewards:FireServer("Reward3")
                 game:GetService("ReplicatedStorage").Events.SessionRewards:FireServer("Reward4")
                 game:GetService("ReplicatedStorage").Events.SessionRewards:FireServer("Reward5")
-                rconsoleprint(currenttime .. " - Collected Vaults,Safes and Vending Machines!\n")
+                print(currenttime .. " - Collected Vaults,Safes and Vending Machines!\n")
             end
         end
     )
@@ -61,7 +61,7 @@ function script()
                     game.Workspace:FindFirstChild("Base Crate")
                 if Crate then
                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Crate.Union.CFrame
-                    rconsoleprint(currenttime .. " - Collected Crate\n")
+                    print(currenttime .. " - Collected Crate\n")
                 end
             end
         end
@@ -82,60 +82,18 @@ function script()
             game:GetService("Players").PlayerAdded:Connect(
                 function(plr)
                     if plr:IsInGroup(group) and plr:GetRankInGroup(group) >= 101 then
-                        game.Players.LocalPlayer:Kick("Staff joined the game.")
-                        rconsoleerr(currenttime .. " - Kicked due to a staff joing your game!\n")
                     end
                 end
             )
         end
     )
 
-    task.spawn(
-        function()
-            rconsolename("Base Raiders Script Console")
-
-            rconsoleclear()
-            rconsoleprint("@@RED@@")
-            rconsoleprint("Thanks for using my script, " .. game.Players.LocalPlayer.Name .. "!\n")
-            rconsoleprint("All credits to Unnamed#0152\n")
-            rconsoleprint("Make sure to join the discord for more releases!\ndiscord.gg/YJJuKp9Eag\n")
-            rconsoleprint("@@WHITE@@")
-        end
-    )
-
-    task.spawn(
-        function()
-            if autoFarm then
-                rconsoleprint("Auto-Farm Active.\n")
-            else
-                rconsoleprint("Auto-Farm Disabled.\n")
-            end
-        end
-    )
-
-    task.spawn(
-        function()
-            if autoCrate then
-                rconsoleprint("Auto-Crate Active.\n")
-            else
-                rconsoleprint("Auto-Crate Disabled.\n")
-            end
-        end
-    )
-
-    task.spawn(
-        function()
-            if antiAFK then
-                rconsoleprint("Anti-AFK Active.\n")
-            else
-                rconsoleprint("Anti-AFK Disabled.\n")
-            end
-        end
-    )
 end
 
-if syn then
+local krnl = KRNL_LOADED
+
+if syn or KRNL_LOADED then
     script()
 else
-    game.Players.LocalPlayer:Kick("Synapse X Is Only Supported!")
+    game.Players.LocalPlayer:Kick("Un-supported Exploit")
 end
