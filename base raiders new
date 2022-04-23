@@ -93,7 +93,7 @@ local identify = identifyexecutor()
 local supportedexploits = {
     "Synapse X",
     "Krnl",
-    "Scriptware"
+    "ScriptWare"
 }
 if table.find(supportedexploits, identify) then
     script()
