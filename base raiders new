@@ -89,6 +89,16 @@ function script()
     )
 end
 
+function SEND(TIT, TEXT)
+    game:GetService("StarterGui"):SetCore(
+        "SendNotification",
+        {
+            Title = "Success!",
+            Text = "Successfully Executed"
+        }
+    )
+end
+
 local identify = identifyexecutor()
 local supportedexploits = {
     "Synapse X",
@@ -97,8 +107,8 @@ local supportedexploits = {
     "Scriptware"
 }
 if table.find(supportedexploits, identify) then
-    warn(identify)
+    script()
+    SEND("Success!", "Successfully Executed")
 else
-    warn("not supported")
+    Game.Players.LocalPlayer:Kick("Un-Supported Executer")
 end
-
