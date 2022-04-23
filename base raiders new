@@ -87,13 +87,16 @@ function script()
             )
         end
     )
-
 end
 
-local krnl = KRNL_LOADED
-
-if syn or KRNL_LOADED then
+local identify = identifyexecutor()
+local supportedexploits = {
+    "Synapse X",
+    "Krnl",
+    "Scriptware"
+}
+if table.find(supportedexploits, identify) then
     script()
 else
-    game.Players.LocalPlayer:Kick("Un-supported Exploit")
+    game.Players.LocalPlayer:Kick("Executer not supported")
 end
