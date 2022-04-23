@@ -104,7 +104,7 @@ local supportedexploits = {
     "Synapse X",
     "Fluxus",
     "Krnl",
-    "Scriptware"
+    "ScriptWare"
 }
 if table.find(supportedexploits, identify) then
     script()
