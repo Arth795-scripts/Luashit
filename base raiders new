@@ -92,11 +92,13 @@ end
 local identify = identifyexecutor()
 local supportedexploits = {
     "Synapse X",
+    "Fluxus",
     "Krnl",
-    "ScriptWare"
+    "Scriptware"
 }
 if table.find(supportedexploits, identify) then
-    script()
+    warn(identify)
 else
-    game.Players.LocalPlayer:Kick("Executer not supported")
+    warn("not supported")
 end
+
