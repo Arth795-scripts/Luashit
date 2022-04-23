@@ -1,26 +1,12 @@
-function script()
-    local group = 4093362
-    local function shit(t)
-        return t > 12 and t - 12 or t
-    end
-    game:GetService("RunService").RenderStepped:Connect(
-        function()
-            local LocalTime = os.date("*t")
-            currenttime =
-                string.format(
-                "%s:%s:%s %s",
-                LocalTime.hour >= 10 and shit(LocalTime.hour) or "0" .. tostring(LocalTime.hour),
-                LocalTime.min >= 10 and LocalTime.min or "0" .. tostring(LocalTime.min),
-                LocalTime.sec >= 10 and LocalTime.sec or "0" .. tostring(LocalTime.sec),
-                LocalTime.hour > 12 and "PM" or "AM"
-            )
-        end
-    )
+getgenv().autoFarm = true
+getgenv().autoCrate = true
+getgenv().antiAFK = true
 
+function script()
     task.spawn(
         function()
             while autoFarm do
-                wait(math.random(5, 220))
+                wait(120)
                 for a, a in pairs(game:GetService("Workspace").Tycoons:GetChildren()) do
                     if a.Owner.Value == tostring(game.Players.LocalPlayer) then
                         for a, a in pairs(a.PlacedContent:GetChildren()) do
@@ -28,7 +14,9 @@ function script()
                                 fireclickdetector(a.Model.Detector.ClickDetector)
                             else
                                 if a.Name == "Vending Machine" then
-                                    fireclickdetector(a.Model.Click.ClickDetector)
+                                    if a.Model.Button.BrickColor == BrickColor.new("Lime green") then
+                                        fireclickdetector(a.Model.Click.ClickDetector)
+                                    end
                                 else
                                     if a.Name == "Safe" then
                                         fireclickdetector(a.Model.Detector.ClickDetector)
@@ -38,13 +26,10 @@ function script()
                         end
                     end
                 end
-
-                game:GetService("ReplicatedStorage").Events.SessionRewards:FireServer("Reward1")
-                game:GetService("ReplicatedStorage").Events.SessionRewards:FireServer("Reward2")
-                game:GetService("ReplicatedStorage").Events.SessionRewards:FireServer("Reward3")
-                game:GetService("ReplicatedStorage").Events.SessionRewards:FireServer("Reward4")
-                game:GetService("ReplicatedStorage").Events.SessionRewards:FireServer("Reward5")
-                print(currenttime .. " - Collected Vaults,Safes and Vending Machines!\n")
+                for i = 1, 5 do
+                    game:GetService("ReplicatedStorage").Events.SessionRewards:FireServer("Reward" .. tostring(i))
+                end
+                print("Auto-Farm Ran.")
             end
         end
     )
@@ -52,7 +37,7 @@ function script()
     task.spawn(
         function()
             while autoCrate do
-                wait(math.random(1, 20))
+                wait(1)
                 local Crate =
                     game.Workspace:FindFirstChild("Godly Crate") or game.Workspace:FindFirstChild("Legendary Crate") or
                     game.Workspace:FindFirstChild("Rainbow Crate") or
@@ -61,7 +46,7 @@ function script()
                     game.Workspace:FindFirstChild("Base Crate")
                 if Crate then
                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Crate.Union.CFrame
-                    print(currenttime .. " - Collected Crate\n")
+                    print("Attempted Collected Crate")
                 end
             end
         end
@@ -69,10 +54,8 @@ function script()
 
     task.spawn(
         function()
-            if antiAFK then
-                for i, v in pairs(getconnections(game.Players.LocalPlayer.Idled)) do
-                    v:Disable()
-                end
+            for i, v in pairs(getconnections(game.Players.LocalPlayer.Idled)) do
+                v:Disable()
             end
         end
     )
@@ -110,5 +93,5 @@ if table.find(supportedexploits, identify) then
     script()
     SEND("Success!", "Successfully Executed")
 else
-    Game.Players.LocalPlayer:Kick("Un-Supported Executer")
+    game.Players.LocalPlayer:Kick("Un-Supported Executer")
 end
